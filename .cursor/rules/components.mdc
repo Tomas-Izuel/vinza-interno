@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+- Components must be **encapsulated and reusable**.
+- Follow a **modular and clean folder structure** for scalability and maintainability.
