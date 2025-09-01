@@ -98,18 +98,7 @@ export function ListaEvento({ eventos, meta }: ListaEventoProps) {
                 {moment(evento.updated_at).format("DD/MM/YYYY")}
               </TableCell>
               <TableCell>
-                <Link href={Routes.VER_EVENTO + evento.id}>
-                  <Button variant="ghost" size={"sm"}>
-                    <Eye className="w-4 h-4" />
-                    Ver
-                  </Button>
-                </Link>
-                <Link href={Routes.VER_EVENTO + evento.id + "?editar=true"}>
-                  <Button variant="ghost" size={"sm"}>
-                    <Pencil className="w-4 h-4" />
-                    Editar
-                  </Button>
-                </Link>
+
                 <Button variant="ghost" size={"sm"} className="text-red-500">
                   <Trash className="w-4 h-4" />
                   Eliminar

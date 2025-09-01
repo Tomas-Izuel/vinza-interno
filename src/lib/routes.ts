@@ -1,23 +1,22 @@
 import z from "zod";
 
 export enum Routes {
-  HOME = "/",
+  BODEGAS = "/",
   LOGIN = "/iniciar-sesion",
   LOGOUT = "/cerrar-sesion",
-  REGISTER = "/registro",
-  UNAUTHORIZED = "/no-autorizado",
-  FORGOT_PASSWORD = "/forgot-password",
-  RESET_PASSWORD = "/reset-password",
-  PERFIL = "/perfil",
-  RESERVAS = "/reservas",
-  EVENTOS = "/eventos",
-  CREAR_EVENTO = "/eventos/crear",
-  VER_EVENTO = "/eventos/",
-  BODEGA = "/bodega",
-  BODEGA_INFORMACION = "/bodega/informacion",
-  CREAR_BODEGA = "/bodega/crear",
-  USUARIOS = "/usuarios",
-  CREAR_USUARIO = "/usuarios/crear",
+  PERMISOS = "/permisos",
+  ESTADO_RESERVA = "/estado-reserva",
+  ESTADO_RESERVA_CREAR = "/estado-reserva/crear",
+  AJUSTES = "/ajustes",
+  ESTADO_INSTANCIA_EVENTO = "/estado-instancia-evento",
+  ESTADO_INSTANCIA_EVENTO_CREAR = "/estado-instancia-evento/crear",
+  CATEGORIA_EVENTO = "/categoria-evento",
+  CATEGORIA_EVENTO_CREAR = "/categoria-evento/crear",
+  ESTADO_EVENTO = "/estados-evento",
+  ESTADO_EVENTO_CREAR = "/estados-evento/crear",
+  ESTADO_RECORRIDO = "/estado-recorrido",
+  ESTADO_RECORRIDO_CREAR = "/estado-recorrido/crear",
+  AUDITORIA = "/auditoria",
 }
 
 export const RouteSchema = z.nativeEnum(Routes);
