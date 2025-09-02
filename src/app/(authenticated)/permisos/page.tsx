@@ -2,6 +2,8 @@ import { getPermisos } from "@/api/permisos/permiso.service";
 import { ListaPermisos } from "@/components/permisos/ListaPermisos";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Vinza - Permisos",
   description: "Gestión de permisos del sistema",
