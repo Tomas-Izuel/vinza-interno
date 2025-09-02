@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Gestión de permisos del sistema",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function PermisosPage() {
   const permisos = await getPermisos();
 
