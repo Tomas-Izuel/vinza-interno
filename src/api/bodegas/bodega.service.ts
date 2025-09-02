@@ -8,7 +8,7 @@ import {
   ValidateBodegaResponse,
 } from "./bodega.type";
 
-export const getBodegas = () => {
+export const getBodegas = async () => {
   try {
     return fetchApiWithAuth<BodegasResponse>("/bodegas");
   } catch (error) {
