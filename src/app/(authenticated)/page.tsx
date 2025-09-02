@@ -2,8 +2,6 @@ import { getBodegas } from "@/api/bodegas/bodega.service";
 import { ListaBodega } from "@/components/bodega/ListaBodega";
 import { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Vinza - Bodegas",
   description: "Lista de bodegas registradas",
