@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Lista de bodegas registradas",
 };
 
+export const dynamic = "force-dynamic";
+
 const BodegasPage = async () => {
   const bodegas = await getBodegas();
 

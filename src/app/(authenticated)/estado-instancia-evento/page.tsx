@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Gestión de estados de instancia evento",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function EstadoInstanciaEventoPage() {
   const estadosInstanciaEvento = await getEstadosInstanciaEvento();
 

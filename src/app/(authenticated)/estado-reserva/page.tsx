@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Gestión de estados de reserva",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function EstadoReservaPage() {
   const estadosReserva = await getEstadosReserva();
 

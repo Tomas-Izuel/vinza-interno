@@ -8,11 +8,9 @@ import {
   ValidateBodegaResponse,
 } from "./bodega.type";
 
-export const getBodegas = async () => {
+export const getBodegas = () => {
   try {
-    const response = await fetchApiWithAuth<BodegasResponse>("/bodegas");
-    console.log(response);
-    return response;
+    return fetchApiWithAuth<BodegasResponse>("/bodegas");
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Error al obtener las bodegas";
