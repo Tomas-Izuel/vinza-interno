@@ -1,11 +1,11 @@
 "use server";
 
 import { fetchApiWithAuth } from "@/lib/utils.server";
-import { PermisosResponse, EditarPermisoData, Permiso } from "./permiso.type";
+import { EditarPermisoData, Permiso } from "./permiso.type";
 
 export const getPermisos = async () => {
   try {
-    const response = await fetchApiWithAuth<PermisosResponse>("/permisos");
+    const response = await fetchApiWithAuth<Permiso[]>("/rbac/permissions");
     return response;
   } catch (error) {
     const errorMessage =

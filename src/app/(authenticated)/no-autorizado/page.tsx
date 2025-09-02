@@ -73,7 +73,7 @@ const UnauthorizedPage = async () => {
             </p>
 
             <div className="flex gap-2">
-              <Link href={Routes.HOME} className="flex-1">
+              <Link href={Routes.BODEGAS} className="flex-1">
                 <Button
                   variant="outline"
                   className="w-full flex items-center gap-2"

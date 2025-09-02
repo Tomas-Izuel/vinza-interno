@@ -10,11 +10,6 @@ export type Permiso = {
   deleted_at: string | null;
 };
 
-export type PermisosResponse = {
-  items: Permiso[];
-  meta: Meta;
-};
-
 // Esquemas de validación
 export const EditarPermisoSchema = z.object({
   nombre: z.string().min(1, "El nombre es obligatorio").optional(),

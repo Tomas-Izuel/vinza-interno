@@ -6,10 +6,11 @@ import { LogOut } from "lucide-react";
 
 export default function TopNav() {
   return (
-    <nav className="bg-gradient-to-r from-primary to-primary/80 text-white px-6 py-2 flex items-center justify-between h-16">
+    <nav className="bg-gray-700 text-white px-6 py-2 flex items-center justify-between h-16">
       <div className="flex items-center">
-        <h1 className="text-lg font-bold tracking-wider font-inria-serif">
-          VINZA
+        <h1 className="text-lg tracking-wider">
+          <span className="font-inria-serif">VINZA </span>- Panel de
+          administrador
         </h1>
       </div>
 

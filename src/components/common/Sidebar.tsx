@@ -1,6 +1,15 @@
 "use client";
 import Link from "next/link";
-import { Home, FileText, Calendar, Users, Settings, Shield, FolderOpen, History } from "lucide-react";
+import {
+  Home,
+  FileText,
+  Calendar,
+  Users,
+  Settings,
+  Shield,
+  FolderOpen,
+  History,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Routes, RouteSchema } from "@/lib/routes";
 import { usePathname } from "next/navigation";
@@ -37,7 +46,8 @@ export default function SidebarNav() {
               href={Routes.CATEGORIA_EVENTO}
               className={cn(
                 "flex items-center px-1 py-1 rounded-md text-sm font-medium cursor-pointer",
-                activePage.success && activePage.data === Routes.CATEGORIA_EVENTO
+                activePage.success &&
+                  activePage.data === Routes.CATEGORIA_EVENTO
                   ? "bg-gray-100 text-primary"
                   : "text-gray-700 hover:bg-gray-100",
               )}
@@ -65,7 +75,8 @@ export default function SidebarNav() {
               href={Routes.ESTADO_INSTANCIA_EVENTO}
               className={cn(
                 "flex items-center px-1 py-1 rounded-md text-sm font-medium cursor-pointer",
-                activePage.success && activePage.data === Routes.ESTADO_INSTANCIA_EVENTO
+                activePage.success &&
+                  activePage.data === Routes.ESTADO_INSTANCIA_EVENTO
                   ? "bg-gray-100 text-primary"
                   : "text-gray-700 hover:bg-gray-100",
               )}
@@ -102,7 +113,8 @@ export default function SidebarNav() {
               href={Routes.ESTADO_RECORRIDO}
               className={cn(
                 "flex items-center px-1 py-1 rounded-md text-sm font-medium cursor-pointer",
-                activePage.success && activePage.data === Routes.ESTADO_RECORRIDO
+                activePage.success &&
+                  activePage.data === Routes.ESTADO_RECORRIDO
                   ? "bg-gray-100 text-primary"
                   : "text-gray-700 hover:bg-gray-100",
               )}

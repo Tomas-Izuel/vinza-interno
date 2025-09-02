@@ -16,3 +16,12 @@ export type BodegasResponse = {
   items: Bodega[];
   meta: Meta;
 };
+
+export type ValidateBodegaRequest = {
+  es_valida: boolean;
+};
+
+export type ValidateBodegaResponse = {
+  message: string;
+  bodega: Bodega;
+};

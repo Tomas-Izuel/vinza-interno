@@ -78,7 +78,7 @@ export default function Error({
                 Reintentar
               </Button>
 
-              <Link href={Routes.HOME} className="flex-1">
+              <Link href={Routes.BODEGAS} className="flex-1">
                 <Button
                   variant="outline"
                   className="w-full flex items-center gap-2"
