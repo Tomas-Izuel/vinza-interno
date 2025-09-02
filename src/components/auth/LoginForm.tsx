@@ -41,7 +41,7 @@ const LoginForm = () => {
     try {
       await login(data);
 
-      router.push(Routes.HOME);
+      router.push(Routes.BODEGAS);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Error al iniciar sesión";
@@ -104,13 +104,6 @@ const LoginForm = () => {
           isLoading={form.formState.isSubmitting}
         >
           Iniciar sesión
-        </Button>
-        <Button
-          variant="outline"
-          className="w-full"
-          isLoading={form.formState.isSubmitting}
-        >
-          Aún no tengo una cuenta
         </Button>
       </CardFooter>
     </Card>
