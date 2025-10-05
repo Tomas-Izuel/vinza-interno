@@ -12,6 +12,8 @@ import { AlertTriangle, ArrowLeft, Shield } from "lucide-react";
 import Link from "next/link";
 import { Routes } from "@/lib/routes";
 
+export const dynamic = "force-dynamic";
+
 const UnauthorizedPage = async () => {
   const headersList = await headers();
   const userName = headersList.get("x-user-name") || "Usuario";
