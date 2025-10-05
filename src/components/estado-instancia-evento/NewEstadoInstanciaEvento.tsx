@@ -3,11 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { createCategoriaEvento } from "@/api/categoria-evento/categoria-evento.service";
+import { crearEstadoInstanciaEvento } from "@/api/estado-instancia-evento/estado-instancia-evento.service";
 import {
-  createCategoriaEventoSchema,
-  CreateCategoriaEventoRequest,
-} from "@/api/categoria-evento/categoria-evento.type";
+  CrearEstadoInstanciaEventoSchema,
+  CrearEstadoInstanciaEventoData,
+} from "@/api/estado-instancia-evento/estado-instancia-evento.type";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -32,28 +32,28 @@ import { useState } from "react";
 import { AuthzGuard } from "../auth/AuthzGuard";
 import { Permissions } from "@/api/auth/auth.type";
 
-export function NewCategoriaEvento() {
+export function NewEstadoInstanciaEvento() {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<CreateCategoriaEventoRequest>({
-    resolver: zodResolver(createCategoriaEventoSchema),
+  const form = useForm<CrearEstadoInstanciaEventoData>({
+    resolver: zodResolver(CrearEstadoInstanciaEventoSchema),
     defaultValues: {
       nombre: "",
     },
   });
 
-  const onSubmit = async (data: CreateCategoriaEventoRequest) => {
+  const onSubmit = async (data: CrearEstadoInstanciaEventoData) => {
     try {
       setIsSubmitting(true);
-      await createCategoriaEvento(data);
+      await crearEstadoInstanciaEvento(data);
       toast.success("Ha sido creado exitosamente");
       form.reset();
       setOpen(false);
-      // Refresh the page to show the new categoria
+      // Refresh the page to show the new estado instancia evento
       window.location.reload();
     } catch (error) {
-      toast.error("Error al crear la categoría", {
+      toast.error("Error al crear el estado de instancia evento", {
         description: error instanceof Error ? error.message : undefined,
       });
     } finally {
@@ -72,15 +72,15 @@ export function NewCategoriaEvento() {
         <DialogTrigger asChild>
           <Button>
             <Plus className="w-4 h-4 mr-2" />
-            Crear categoría
+            Crear estado instancia
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Crear nueva categoría</DialogTitle>
+            <DialogTitle>Crear nuevo estado de instancia evento</DialogTitle>
             <DialogDescription>
-              Completa los campos obligatorios para crear una nueva categoría de
-              evento.
+              Completa los campos obligatorios para crear un nuevo estado de
+              instancia evento.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -90,10 +90,10 @@ export function NewCategoriaEvento() {
                 name="nombre"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nombre de la categoría *</FormLabel>
+                    <FormLabel>Nombre del estado *</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Ingresa el nombre de la categoría"
+                        placeholder="Ingresa el nombre del estado"
                         {...field}
                       />
                     </FormControl>
@@ -111,7 +111,7 @@ export function NewCategoriaEvento() {
                   Cancelar
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Creando..." : "Crear categoría"}
+                  {isSubmitting ? "Creando..." : "Crear estado"}
                 </Button>
               </DialogFooter>
             </form>

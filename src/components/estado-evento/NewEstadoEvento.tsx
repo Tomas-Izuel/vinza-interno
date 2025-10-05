@@ -52,8 +52,10 @@ export function NewEstadoEvento() {
       setOpen(false);
       // Refresh the page to show the new estado
       window.location.reload();
-    } catch {
-      toast.error("Error al crear el estado de evento");
+    } catch (error) {
+      toast.error("Error al crear el estado de evento", {
+        description: error instanceof Error ? error.message : undefined,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -64,9 +66,14 @@ export function NewEstadoEvento() {
     setOpen(false);
   };
 
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    form.reset();
+  };
+
   return (
     <AuthzGuard permissions={[Permissions.SUDO]}>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogTrigger asChild>
           <Button>
             <Plus className="w-4 h-4 mr-2" />

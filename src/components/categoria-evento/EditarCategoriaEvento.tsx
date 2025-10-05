@@ -3,10 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { createCategoriaEvento } from "@/api/categoria-evento/categoria-evento.service";
+import { editarCategoriaEvento } from "@/api/categoria-evento/categoria-evento.service";
 import {
-  createCategoriaEventoSchema,
-  CreateCategoriaEventoRequest,
+  updateCategoriaEventoSchema,
+  EditarCategoriaEventoData,
+  CategoriaEvento,
 } from "@/api/categoria-evento/categoria-evento.type";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,37 +28,39 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useState } from "react";
 import { AuthzGuard } from "../auth/AuthzGuard";
 import { Permissions } from "@/api/auth/auth.type";
 
-export function NewCategoriaEvento() {
-  const [open, setOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+interface EditarCategoriaEventoProps {
+  categoriaEvento: CategoriaEvento;
+}
 
-  const form = useForm<CreateCategoriaEventoRequest>({
-    resolver: zodResolver(createCategoriaEventoSchema),
+export function EditarCategoriaEvento({
+  categoriaEvento,
+}: EditarCategoriaEventoProps) {
+  const [open, setOpen] = useState(false);
+
+  const form = useForm<EditarCategoriaEventoData>({
+    resolver: zodResolver(updateCategoriaEventoSchema),
     defaultValues: {
-      nombre: "",
+      nombre: categoriaEvento.nombre,
     },
   });
 
-  const onSubmit = async (data: CreateCategoriaEventoRequest) => {
+  const onSubmit = async (data: EditarCategoriaEventoData) => {
     try {
-      setIsSubmitting(true);
-      await createCategoriaEvento(data);
-      toast.success("Ha sido creado exitosamente");
+      await editarCategoriaEvento(categoriaEvento.id, data);
+      toast.success("Ha sido editado exitosamente");
       form.reset();
       setOpen(false);
-      // Refresh the page to show the new categoria
+      // Refresh the page to show the updated categoria evento
       window.location.reload();
     } catch (error) {
-      toast.error("Error al crear la categoría", {
+      toast.error("Error al actualizar la categoría de evento", {
         description: error instanceof Error ? error.message : undefined,
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -70,17 +73,16 @@ export function NewCategoriaEvento() {
     <AuthzGuard permissions={[Permissions.SUDO]}>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>
-            <Plus className="w-4 h-4 mr-2" />
-            Crear categoría
+          <Button variant="ghost" size="sm" className="text-gray-600">
+            <Edit className="w-4 h-4 mr-1" />
+            Editar
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Crear nueva categoría</DialogTitle>
+            <DialogTitle>Editar categoría de evento</DialogTitle>
             <DialogDescription>
-              Completa los campos obligatorios para crear una nueva categoría de
-              evento.
+              Modifica el nombre de la categoría de evento seleccionada.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -90,7 +92,7 @@ export function NewCategoriaEvento() {
                 name="nombre"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nombre de la categoría *</FormLabel>
+                    <FormLabel>Nombre de la categoría</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Ingresa el nombre de la categoría"
@@ -106,12 +108,14 @@ export function NewCategoriaEvento() {
                   type="button"
                   variant="outline"
                   onClick={handleCancel}
-                  disabled={isSubmitting}
+                  disabled={form.formState.isSubmitting}
                 >
                   Cancelar
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Creando..." : "Crear categoría"}
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting
+                    ? "Guardando..."
+                    : "Guardar cambios"}
                 </Button>
               </DialogFooter>
             </form>

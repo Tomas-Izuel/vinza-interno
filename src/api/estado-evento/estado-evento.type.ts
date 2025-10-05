@@ -18,6 +18,12 @@ export const createEstadoEventoSchema = z.object({
   nombre: z.string().min(1, "El nombre es obligatorio"),
 });
 
+export const updateEstadoEventoSchema = z.object({
+  nombre: z.string().min(1, "El estado es requerido").optional(),
+});
+
 export type CreateEstadoEventoRequest = z.infer<
   typeof createEstadoEventoSchema
 >;
+
+export type EditarEstadoEventoData = z.infer<typeof updateEstadoEventoSchema>;

@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/table";
 import { CommonTableFooter } from "../common/CommonTableFooter";
 import moment from "moment";
-import { Button } from "../ui/button";
-import { Edit, Trash } from "lucide-react";
+import { EditarEstadoReserva } from "./EditarEstadoReserva";
+import { EliminarEstadoReserva } from "./EliminarEstadoReserva";
 
 interface ListaEstadoReservaProps {
   estadosReserva: EstadoReserva[];
@@ -42,18 +42,8 @@ export function ListaEstadoReserva({
                 {moment(estado.updated_at).format("MMM D, YYYY")}
               </TableCell>
               <TableCell className="text-right">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-600 mr-2"
-                >
-                  <Edit className="w-4 h-4 mr-1" />
-                  Edit
-                </Button>
-                <Button variant="ghost" size="sm" className="text-red-500">
-                  <Trash className="w-4 h-4 mr-1" />
-                  Borrar
-                </Button>
+                <EditarEstadoReserva estadoReserva={estado} />
+                <EliminarEstadoReserva estadoReserva={estado} />
               </TableCell>
             </TableRow>
           ))}

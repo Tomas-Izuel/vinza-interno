@@ -3,11 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { createCategoriaEvento } from "@/api/categoria-evento/categoria-evento.service";
+import { editarEstadoInstanciaEvento } from "@/api/estado-instancia-evento/estado-instancia-evento.service";
 import {
-  createCategoriaEventoSchema,
-  CreateCategoriaEventoRequest,
-} from "@/api/categoria-evento/categoria-evento.type";
+  updateEstadoInstanciaEventoSchema,
+  EditarEstadoInstanciaEventoData,
+  EstadoInstanciaEvento,
+} from "@/api/estado-instancia-evento/estado-instancia-evento.type";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,37 +28,39 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useState } from "react";
 import { AuthzGuard } from "../auth/AuthzGuard";
 import { Permissions } from "@/api/auth/auth.type";
 
-export function NewCategoriaEvento() {
-  const [open, setOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+interface EditarEstadoInstanciaEventoProps {
+  estadoInstanciaEvento: EstadoInstanciaEvento;
+}
 
-  const form = useForm<CreateCategoriaEventoRequest>({
-    resolver: zodResolver(createCategoriaEventoSchema),
+export function EditarEstadoInstanciaEvento({
+  estadoInstanciaEvento,
+}: EditarEstadoInstanciaEventoProps) {
+  const [open, setOpen] = useState(false);
+
+  const form = useForm<EditarEstadoInstanciaEventoData>({
+    resolver: zodResolver(updateEstadoInstanciaEventoSchema),
     defaultValues: {
-      nombre: "",
+      nombre: estadoInstanciaEvento.nombre,
     },
   });
 
-  const onSubmit = async (data: CreateCategoriaEventoRequest) => {
+  const onSubmit = async (data: EditarEstadoInstanciaEventoData) => {
     try {
-      setIsSubmitting(true);
-      await createCategoriaEvento(data);
-      toast.success("Ha sido creado exitosamente");
+      await editarEstadoInstanciaEvento(estadoInstanciaEvento.id, data);
+      toast.success("Ha sido editado exitosamente");
       form.reset();
       setOpen(false);
-      // Refresh the page to show the new categoria
+      // Refresh the page to show the updated estado instancia evento
       window.location.reload();
     } catch (error) {
-      toast.error("Error al crear la categoría", {
+      toast.error("Error al actualizar el estado de instancia evento", {
         description: error instanceof Error ? error.message : undefined,
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -66,21 +69,25 @@ export function NewCategoriaEvento() {
     setOpen(false);
   };
 
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    form.reset();
+  };
+
   return (
     <AuthzGuard permissions={[Permissions.SUDO]}>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogTrigger asChild>
-          <Button>
-            <Plus className="w-4 h-4 mr-2" />
-            Crear categoría
+          <Button variant="ghost" size="sm" className="text-gray-600">
+            <Edit className="w-4 h-4 mr-1" />
+            Editar
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Crear nueva categoría</DialogTitle>
+            <DialogTitle>Editar estado de instancia evento</DialogTitle>
             <DialogDescription>
-              Completa los campos obligatorios para crear una nueva categoría de
-              evento.
+              Modifica el nombre del estado de instancia evento seleccionado.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -90,10 +97,10 @@ export function NewCategoriaEvento() {
                 name="nombre"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nombre de la categoría *</FormLabel>
+                    <FormLabel>Nombre del estado</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Ingresa el nombre de la categoría"
+                        placeholder="Ingresa el nombre del estado"
                         {...field}
                       />
                     </FormControl>
@@ -106,12 +113,14 @@ export function NewCategoriaEvento() {
                   type="button"
                   variant="outline"
                   onClick={handleCancel}
-                  disabled={isSubmitting}
+                  disabled={form.formState.isSubmitting}
                 >
                   Cancelar
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Creando..." : "Crear categoría"}
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting
+                    ? "Guardando..."
+                    : "Guardar cambios"}
                 </Button>
               </DialogFooter>
             </form>
