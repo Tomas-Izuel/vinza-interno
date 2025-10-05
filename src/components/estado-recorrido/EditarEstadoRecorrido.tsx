@@ -3,10 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { createEstadoRecorrido } from "@/api/estado-recorrido/estado-recorrido.service";
+import { editarEstadoRecorrido } from "@/api/estado-recorrido/estado-recorrido.service";
 import {
-  createEstadoRecorridoSchema,
-  CreateEstadoRecorridoRequest,
+  updateEstadoRecorridoSchema,
+  EditarEstadoRecorridoData,
+  EstadoRecorrido,
 } from "@/api/estado-recorrido/estado-recorrido.type";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,37 +28,39 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useState } from "react";
 import { AuthzGuard } from "../auth/AuthzGuard";
 import { Permissions } from "@/api/auth/auth.type";
 
-export function NewEstadoRecorrido() {
-  const [open, setOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+interface EditarEstadoRecorridoProps {
+  estadoRecorrido: EstadoRecorrido;
+}
 
-  const form = useForm<CreateEstadoRecorridoRequest>({
-    resolver: zodResolver(createEstadoRecorridoSchema),
+export function EditarEstadoRecorrido({
+  estadoRecorrido,
+}: EditarEstadoRecorridoProps) {
+  const [open, setOpen] = useState(false);
+
+  const form = useForm<EditarEstadoRecorridoData>({
+    resolver: zodResolver(updateEstadoRecorridoSchema),
     defaultValues: {
-      nombre: "",
+      nombre: estadoRecorrido.nombre,
     },
   });
 
-  const onSubmit = async (data: CreateEstadoRecorridoRequest) => {
+  const onSubmit = async (data: EditarEstadoRecorridoData) => {
     try {
-      setIsSubmitting(true);
-      await createEstadoRecorrido(data);
-      toast.success("Ha sido creado exitosamente");
+      await editarEstadoRecorrido(estadoRecorrido.id, data);
+      toast.success("Ha sido editado exitosamente");
       form.reset();
       setOpen(false);
-      // Refresh the page to show the new estado
+      // Refresh the page to show the updated estado recorrido
       window.location.reload();
     } catch (error) {
-      toast.error("Error al crear el estado de recorrido", {
+      toast.error("Error al actualizar el estado de recorrido", {
         description: error instanceof Error ? error.message : undefined,
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -70,17 +73,16 @@ export function NewEstadoRecorrido() {
     <AuthzGuard permissions={[Permissions.SUDO]}>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>
-            <Plus className="w-4 h-4 mr-2" />
-            Crear estado de recorrido
+          <Button variant="ghost" size="sm" className="text-gray-600">
+            <Edit className="w-4 h-4 mr-1" />
+            Editar
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Crear nuevo estado de recorrido</DialogTitle>
+            <DialogTitle>Editar estado de recorrido</DialogTitle>
             <DialogDescription>
-              Completa los campos obligatorios para crear un nuevo estado de
-              recorrido.
+              Modifica el nombre del estado de recorrido seleccionado.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -90,10 +92,10 @@ export function NewEstadoRecorrido() {
                 name="nombre"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nombre del estado *</FormLabel>
+                    <FormLabel>Nombre del estado</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Ingresa el nombre del estado de recorrido"
+                        placeholder="Ingresa el nombre del estado"
                         {...field}
                       />
                     </FormControl>
@@ -106,12 +108,14 @@ export function NewEstadoRecorrido() {
                   type="button"
                   variant="outline"
                   onClick={handleCancel}
-                  disabled={isSubmitting}
+                  disabled={form.formState.isSubmitting}
                 >
                   Cancelar
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Creando..." : "Crear estado"}
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting
+                    ? "Guardando..."
+                    : "Guardar cambios"}
                 </Button>
               </DialogFooter>
             </form>

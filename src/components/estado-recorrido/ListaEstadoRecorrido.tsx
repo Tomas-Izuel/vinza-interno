@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, Trash } from "lucide-react";
 import moment from "moment";
-import { Button } from "../ui/button";
+import { EditarEstadoRecorrido } from "./EditarEstadoRecorrido";
+import { EliminarEstadoRecorrido } from "./EliminarEstadoRecorrido";
 
 interface ListaEstadoRecorridoProps {
   estadosRecorrido: EstadoRecorrido[];
@@ -38,18 +38,8 @@ export function ListaEstadoRecorrido({
                 {moment(estado.updated_at).format("MMM D, YYYY")}
               </TableCell>
               <TableCell className="text-right">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-600 mr-2"
-                >
-                  <Edit className="w-4 h-4 mr-1" />
-                  Editar
-                </Button>
-                <Button variant="ghost" size="sm" className="text-red-500">
-                  <Trash className="w-4 h-4 mr-1" />
-                  Eliminar
-                </Button>
+                <EditarEstadoRecorrido estadoRecorrido={estado} />
+                <EliminarEstadoRecorrido estadoRecorrido={estado} />
               </TableCell>
             </TableRow>
           ))}

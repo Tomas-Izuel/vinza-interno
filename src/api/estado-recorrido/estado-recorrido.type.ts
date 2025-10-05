@@ -14,6 +14,14 @@ export const createEstadoRecorridoSchema = z.object({
   nombre: z.string().min(1, "El nombre es obligatorio"),
 });
 
+export const updateEstadoRecorridoSchema = z.object({
+  nombre: z.string().min(1, "El nombre es requerido").optional(),
+});
+
 export type CreateEstadoRecorridoRequest = z.infer<
   typeof createEstadoRecorridoSchema
+>;
+
+export type EditarEstadoRecorridoData = z.infer<
+  typeof updateEstadoRecorridoSchema
 >;
