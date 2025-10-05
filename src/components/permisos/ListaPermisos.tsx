@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/table";
 import { CommonTableFooter } from "../common/CommonTableFooter";
 import moment from "moment";
-import { Button } from "../ui/button";
-import { Edit } from "lucide-react";
+import { EditarPermiso } from "./EditarPermiso";
 
 interface ListaPermisosProps {
   permisos: Permiso[];
@@ -43,10 +42,7 @@ export function ListaPermisos({ permisos, meta }: ListaPermisosProps) {
                 {moment(permiso.updated_at).format("MMM D, YYYY")}
               </TableCell>
               <TableCell className="text-right">
-                <Button variant="ghost" size="sm" className="text-gray-600">
-                  <Edit className="w-4 h-4 mr-1" />
-                  Editar
-                </Button>
+                <EditarPermiso permiso={permiso} />
               </TableCell>
             </TableRow>
           ))}

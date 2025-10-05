@@ -1,4 +1,3 @@
-import { Meta } from "../common.type";
 import { z } from "zod";
 
 export type Permiso = {

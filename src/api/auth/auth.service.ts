@@ -1,10 +1,15 @@
 "use server";
 
 import { errorLogger } from "@/lib/utils";
-import { AuthCookieSchema, LoginDto, LoginResponse } from "./auth.type";
+import {
+  AuthCookieSchema,
+  LoginDto,
+  LoginResponse,
+  Permissions,
+} from "./auth.type";
 import { AUTH_COOKIE_NAME } from "@/lib/constants";
 import { cookies } from "next/headers";
-import { fetchApi } from "@/lib/utils.server";
+import { fetchApi, fetchApiWithAuth } from "@/lib/utils.server";
 
 export const login = async (data: LoginDto) => {
   try {
@@ -19,14 +24,13 @@ export const login = async (data: LoginDto) => {
     });
 
     const authData = res;
-    console.log(res);
     // Verificar que el token esté presente en la respuesta
     if (!authData.token) {
       throw new Error("Token de autenticación no recibido del servidor");
     }
 
-    const authCookie = AuthCookieSchema.parse(authData);
-    cookieStore.set(AUTH_COOKIE_NAME, JSON.stringify(authCookie), {
+    const authCookieData = AuthCookieSchema.parse(authData);
+    cookieStore.set(AUTH_COOKIE_NAME, JSON.stringify(authCookieData), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -39,6 +43,23 @@ export const login = async (data: LoginDto) => {
     const errorMessage =
       error instanceof Error ? error.message : "Error al iniciar sesión";
     errorLogger(error, "login");
+    throw new Error(errorMessage);
+  }
+};
+
+export const getMyPermissions = async () => {
+  try {
+    const response = await fetchApiWithAuth<Record<Permissions, Permissions>>(
+      "/rbac/me",
+      {
+        cache: "force-cache",
+      },
+    );
+    return response;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Error al obtener los permisos";
+    console.error("[PERMISOS]: ", error);
     throw new Error(errorMessage);
   }
 };

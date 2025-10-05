@@ -10,12 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CommonTableFooter } from "../common/CommonTableFooter";
+import { MapPin } from "lucide-react";
 import moment from "moment";
-import { Badge } from "../ui/badge";
-import { CheckCircle, MapPin } from "lucide-react";
 import Link from "next/link";
+import { CommonTableFooter } from "../common/CommonTableFooter";
+import { Badge } from "../ui/badge";
 import { ValidarBodegaButton } from "./ValidarBodegaButton";
+import { extractBodegaAdress } from "@/lib/utils";
 
 interface ListaBodegaProps {
   bodegas: Bodega[];
@@ -26,6 +27,9 @@ export function ListaBodega({ bodegas, meta }: ListaBodegaProps) {
   const renderBadgeStatus = (bodega: Bodega) => {
     if (bodega.deleted_at) {
       return <Badge variant="destructive">Eliminada</Badge>;
+    }
+    if (!bodega.validada) {
+      return <Badge variant="default">No validada</Badge>;
     }
     return <Badge variant="default">Activa</Badge>;
   };
@@ -46,15 +50,20 @@ export function ListaBodega({ bodegas, meta }: ListaBodegaProps) {
         <TableBody>
           {bodegas.map((bodega) => (
             <TableRow key={bodega.id}>
-              <TableCell className="font-medium flex items-center gap-2">
-                {bodega.nombre}
+              <TableCell>
+                <Link
+                  href={`/bodegas/${bodega.id}`}
+                  className="font-medium flex items-center gap-2 hover:underline"
+                >
+                  {bodega.nombre}
+                </Link>
               </TableCell>
               <TableCell>{bodega.telefono}</TableCell>
               <TableCell>
-                <Link href={`/bodegas/${bodega.id}`}>
-                  {bodega.direccion}
+                <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-red-500" />
-                </Link>
+                  {extractBodegaAdress(bodega)}
+                </div>
               </TableCell>
               <TableCell>
                 {moment(bodega.created_at).format("MMM D, YYYY")}

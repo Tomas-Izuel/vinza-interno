@@ -10,6 +10,19 @@ export type Bodega = {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
+  sucursales: Sucursal[];
+};
+
+export type Sucursal = {
+  id: number;
+  nombre: string;
+  es_principal: boolean;
+  direccion: string;
+  aclaraciones: string;
+  bodegaId: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
 };
 
 export type BodegasResponse = {

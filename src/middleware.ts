@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
 
   // Obtener la cookie de autenticación
   const authCookie = request.cookies.get(AUTH_COOKIE_NAME);
-
+  console.log("AUTH COOKIE", authCookie);
   // Si no hay cookie, redirigir al login
   if (!authCookie) {
     middlewareLogger.authFailure(pathname, "Cookie no encontrada");
