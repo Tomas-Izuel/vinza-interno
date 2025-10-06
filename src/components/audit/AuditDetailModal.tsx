@@ -109,8 +109,8 @@ export function AuditDetailModal({
             <label className="text-sm font-medium text-gray-500">
               Datos del Evento
             </label>
-            <div className="mt-2 p-4 bg-gray-50 rounded-lg">
-              <pre className="text-xs overflow-x-auto">
+            <div className="mt-2 p-4 bg-gray-50 rounded-lg  overflow-y-auto">
+              <pre className="text-xs max-w-[500px] overflow-y-auto text-wrap">
                 {JSON.stringify(audit.valor, null, 2)}
               </pre>
             </div>
