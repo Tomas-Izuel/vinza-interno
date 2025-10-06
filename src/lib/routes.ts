@@ -12,11 +12,12 @@ export enum Routes {
   ESTADO_INSTANCIA_EVENTO_CREAR = "/estado-instancia-evento/crear",
   CATEGORIA_EVENTO = "/categoria-evento",
   CATEGORIA_EVENTO_CREAR = "/categoria-evento/crear",
-  ESTADO_EVENTO = "/estados-evento",
+  ESTADO_EVENTO = "/estado-evento",
   ESTADO_EVENTO_CREAR = "/estados-evento/crear",
   ESTADO_RECORRIDO = "/estado-recorrido",
   ESTADO_RECORRIDO_CREAR = "/estado-recorrido/crear",
   AUDITORIA = "/auditoria",
+  PREGUNTAS_FRECUENTES = "/preguntas-frecuentes",
 }
 
 export const RouteSchema = z.nativeEnum(Routes);

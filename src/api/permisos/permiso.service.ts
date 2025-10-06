@@ -17,10 +17,16 @@ export const getPermisos = async () => {
 
 export const editarPermiso = async (id: number, data: EditarPermisoData) => {
   try {
-    const response = await fetchApiWithAuth<Permiso>(`/permisos/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-    });
+    const response = await fetchApiWithAuth<Permiso>(
+      `/rbac/permissions/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
+    );
     return response;
   } catch (error) {
     const errorMessage =

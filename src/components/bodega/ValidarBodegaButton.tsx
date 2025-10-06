@@ -11,11 +11,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CheckCircle, PenBox, MapPin, Phone } from "lucide-react";
+import {
+  CheckCircle,
+  PenBox,
+  MapPin,
+  Phone,
+  Building,
+  FileText,
+} from "lucide-react";
 import { Bodega } from "@/api/bodegas/bodega.type";
 import { validateBodega } from "@/api/bodegas/bodega.service";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { extractBodegaAdress } from "@/lib/utils";
 
 interface ValidarBodegaButtonProps {
   bodega: Bodega;
@@ -76,33 +84,35 @@ export function ValidarBodegaButton({ bodega }: ValidarBodegaButtonProps) {
             </h4>
 
             <div className="space-y-2">
-              <div>
+              <div className="flex items-center gap-2">
+                <Building className="w-4 h-4 text-gray-500" />
                 <span className="font-medium text-gray-700">Nombre:</span>
                 <p className="text-gray-900">{bodega.nombre}</p>
               </div>
 
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-gray-500 mt-0.5" />
-                <div>
-                  <span className="font-medium text-gray-700">Dirección:</span>
-                  <p className="text-gray-900">{bodega.direccion}</p>
-                </div>
+
+                <span className="font-medium text-gray-700">Dirección:</span>
+                <p className="text-gray-900">{extractBodegaAdress(bodega)}</p>
               </div>
 
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-gray-500" />
-                <div>
-                  <span className="font-medium text-gray-700">Teléfono:</span>
-                  <p className="text-gray-900">{bodega.telefono}</p>
-                </div>
+
+                <span className="font-medium text-gray-700">Teléfono:</span>
+                <p className="text-gray-900">{bodega.telefono}</p>
               </div>
 
               {bodega.descripcion && (
-                <div>
-                  <span className="font-medium text-gray-700">
-                    Descripción:
-                  </span>
-                  <p className="text-gray-900">{bodega.descripcion}</p>
+                <div className="flex items-start gap-2">
+                  <FileText className="w-4 h-4 text-gray-500 mt-0.5" />
+                  <div>
+                    <span className="font-medium text-gray-700">
+                      Descripción:
+                    </span>
+                    <p className="text-gray-900">{bodega.descripcion}</p>
+                  </div>
                 </div>
               )}
             </div>

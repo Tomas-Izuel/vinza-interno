@@ -64,7 +64,6 @@ export interface LoginResponse {
 export const RoleSchema = z.object({
   id: z.number(),
   nombre: z.string(),
-  bodegaId: z.number(),
   created_at: z.string(),
   updated_at: z.string(),
 });
@@ -75,9 +74,30 @@ export const AuthCookieSchema = z.object({
   apellido: z.string(),
   email: z.string(),
   validado: z.string().nullable(),
-  bodegaId: z.number(),
   roles: z.array(RoleSchema),
   token: z.string(),
 });
 
 export type LoginDto = z.infer<typeof LoginSchema>;
+
+export enum Permissions {
+  SUDO = "SUDO",
+  BODEGAS_READ = "BODEGAS:READ",
+  BODEGAS_MANAGE = "BODEGAS:MANAGE",
+  BODEGAS_VALIDATE = "BODEGAS:VALIDATE",
+  USERS_READ = "USERS:READ",
+  USERS_MANAGE = "USERS:MANAGE",
+  ROLES_READ = "ROLES:READ",
+  ROLES_MANAGE = "ROLES:MANAGE",
+  EVENTOS_READ = "EVENTOS:READ",
+  EVENTOS_MANAGE = "EVENTOS:MANAGE",
+  RESERVAS_READ = "RESERVAS:READ",
+  RESERVAS_MANAGE = "RESERVAS:MANAGE",
+  RECORRIDO_READ = "RECORRIDO:READ",
+  RECORRIDO_MANAGE = "RECORRIDO:MANAGE",
+  VALORACIONES_READ = "VALORACIONES:READ",
+  VALORACIONES_MANAGE = "VALORACIONES:MANAGE",
+  INSTANCIA_EVENTOS_READ = "INSTANCIA_EVENTOS:READ",
+  INSTANCIA_EVENTOS_MANAGE = "INSTANCIA_EVENTOS:MANAGE",
+  FAQ_MANAGE = "FAQ:MANAGE",
+}

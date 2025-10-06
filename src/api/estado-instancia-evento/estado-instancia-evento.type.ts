@@ -18,15 +18,15 @@ export type EstadoInstanciaEventoResponse = {
 // Esquemas de validación
 export const CrearEstadoInstanciaEventoSchema = z.object({
   nombre: z.string().min(1, "El nombre es obligatorio"),
-  descripcion: z.string().optional(),
 });
 
-export const EditarEstadoInstanciaEventoSchema =
-  CrearEstadoInstanciaEventoSchema.partial();
+export const updateEstadoInstanciaEventoSchema = z.object({
+  nombre: z.string().min(1, "El estado es requerido").optional(),
+});
 
 export type CrearEstadoInstanciaEventoData = z.infer<
   typeof CrearEstadoInstanciaEventoSchema
 >;
 export type EditarEstadoInstanciaEventoData = z.infer<
-  typeof EditarEstadoInstanciaEventoSchema
+  typeof updateEstadoInstanciaEventoSchema
 >;
