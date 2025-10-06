@@ -4,11 +4,11 @@ import {
   Home,
   FileText,
   Calendar,
-  Users,
   Settings,
   Shield,
   FolderOpen,
   History,
+  HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Routes, RouteSchema } from "@/lib/routes";
@@ -173,6 +173,21 @@ export default function SidebarNav() {
               <div className="flex items-center px-1 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded-md cursor-pointer">
                 <History className="h-4 w-4 mr-3" />
                 Auditoría
+              </div>
+            </Link>
+            <Link
+              href={Routes.PREGUNTAS_FRECUENTES}
+              className={cn(
+                "flex items-center px-1 py-1 rounded-md text-sm font-medium cursor-pointer",
+                activePage.success &&
+                  activePage.data === Routes.PREGUNTAS_FRECUENTES
+                  ? "bg-gray-100 text-primary"
+                  : "text-gray-700 hover:bg-gray-100",
+              )}
+            >
+              <div className="flex items-center px-1 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded-md cursor-pointer">
+                <HelpCircle className="h-4 w-4 mr-3" />
+                Preguntas Frecuentes
               </div>
             </Link>
           </div>

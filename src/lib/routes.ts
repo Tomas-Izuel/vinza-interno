@@ -17,6 +17,7 @@ export enum Routes {
   ESTADO_RECORRIDO = "/estado-recorrido",
   ESTADO_RECORRIDO_CREAR = "/estado-recorrido/crear",
   AUDITORIA = "/auditoria",
+  PREGUNTAS_FRECUENTES = "/preguntas-frecuentes",
 }
 
 export const RouteSchema = z.nativeEnum(Routes);

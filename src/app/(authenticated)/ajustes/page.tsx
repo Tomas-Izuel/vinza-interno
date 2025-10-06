@@ -2,6 +2,8 @@ import { MaximosDiasAdelanteReserva } from "@/components/ajustes/MaximosDiasAdel
 import { BackupSection } from "@/components/ajustes/BackupSection";
 import { getMaximosDiasAdelanteReserva } from "@/api/maximos-dias-adelante-reserva/maximos-dias-adelante-reserva.service";
 
+export const dynamic = "force-dynamic";
+
 export default async function AjustesPage() {
   const initialData = await getMaximosDiasAdelanteReserva();
 
