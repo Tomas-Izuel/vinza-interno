@@ -26,6 +26,7 @@ export function ListaCategoriaEvento({
         <TableHeader className="bg-gray-100">
           <TableRow>
             <TableHead>Nombre</TableHead>
+            <TableHead>Descripción</TableHead>
             <TableHead>Última modificación</TableHead>
             <TableHead> </TableHead>
           </TableRow>
@@ -34,6 +35,9 @@ export function ListaCategoriaEvento({
           {categoriasEvento.map((categoria) => (
             <TableRow key={categoria.id}>
               <TableCell className="font-medium">{categoria.nombre}</TableCell>
+              <TableCell className="text-gray-600">
+                {categoria.descripcion || "-"}
+              </TableCell>
               <TableCell>
                 {moment(categoria.updated_at).format("MMM D, YYYY")}
               </TableCell>

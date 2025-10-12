@@ -28,10 +28,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 import { AuthzGuard } from "../auth/AuthzGuard";
 import { Permissions } from "@/api/auth/auth.type";
+import { useRouter } from "next/navigation";
 
 interface EditarEstadoInstanciaEventoProps {
   estadoInstanciaEvento: EstadoInstanciaEvento;
@@ -40,12 +42,14 @@ interface EditarEstadoInstanciaEventoProps {
 export function EditarEstadoInstanciaEvento({
   estadoInstanciaEvento,
 }: EditarEstadoInstanciaEventoProps) {
+  const { refresh } = useRouter();
   const [open, setOpen] = useState(false);
 
   const form = useForm<EditarEstadoInstanciaEventoData>({
     resolver: zodResolver(updateEstadoInstanciaEventoSchema),
     defaultValues: {
       nombre: estadoInstanciaEvento.nombre,
+      descripcion: estadoInstanciaEvento.descripcion || "",
     },
   });
 
@@ -56,7 +60,7 @@ export function EditarEstadoInstanciaEvento({
       form.reset();
       setOpen(false);
       // Refresh the page to show the updated estado instancia evento
-      window.location.reload();
+      refresh();
     } catch (error) {
       toast.error("Error al actualizar el estado de instancia evento", {
         description: error instanceof Error ? error.message : undefined,
@@ -87,7 +91,8 @@ export function EditarEstadoInstanciaEvento({
           <DialogHeader>
             <DialogTitle>Editar estado de instancia evento</DialogTitle>
             <DialogDescription>
-              Modifica el nombre del estado de instancia evento seleccionado.
+              Modifica el nombre y descripción del estado de instancia evento
+              seleccionado.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -101,6 +106,22 @@ export function EditarEstadoInstanciaEvento({
                     <FormControl>
                       <Input
                         placeholder="Ingresa el nombre del estado"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="descripcion"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Descripción</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Ingresa una descripción (opcional)"
                         {...field}
                       />
                     </FormControl>

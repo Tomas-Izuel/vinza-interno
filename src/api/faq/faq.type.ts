@@ -40,8 +40,8 @@ export const createFaqSchema = z.object({
   question: z.string().min(1, "La pregunta es obligatoria"),
   answer: z.string().min(1, "La respuesta es obligatoria"),
   recipient_id: z.coerce
-    .number()
-    .int()
+    .number({ message: "Debe seleccionar un destinatario" })
+    .int({ message: "Debe seleccionar un destinatario" })
     .positive("Debe seleccionar un destinatario"),
 });
 

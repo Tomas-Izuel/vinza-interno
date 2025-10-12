@@ -28,6 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 import { AuthzGuard } from "../auth/AuthzGuard";
@@ -46,6 +47,7 @@ export function EditarCategoriaEvento({
     resolver: zodResolver(updateCategoriaEventoSchema),
     defaultValues: {
       nombre: categoriaEvento.nombre,
+      descripcion: categoriaEvento.descripcion || "",
     },
   });
 
@@ -82,7 +84,8 @@ export function EditarCategoriaEvento({
           <DialogHeader>
             <DialogTitle>Editar categoría de evento</DialogTitle>
             <DialogDescription>
-              Modifica el nombre de la categoría de evento seleccionada.
+              Modifica el nombre y descripción de la categoría de evento
+              seleccionada.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -96,6 +99,22 @@ export function EditarCategoriaEvento({
                     <FormControl>
                       <Input
                         placeholder="Ingresa el nombre de la categoría"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="descripcion"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Descripción</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Ingresa una descripción (opcional)"
                         {...field}
                       />
                     </FormControl>

@@ -3,6 +3,7 @@
 import { errorLogger } from "@/lib/utils";
 import { fetchApiWithAuth } from "@/lib/utils.server";
 import {
+  BodegaResponse,
   BodegasResponse,
   ValidateBodegaRequest,
   ValidateBodegaResponse,
@@ -15,6 +16,17 @@ export const getBodegas = async () => {
     const errorMessage =
       error instanceof Error ? error.message : "Error al obtener las bodegas";
     errorLogger(error, "getBodegas");
+    throw new Error(errorMessage);
+  }
+};
+
+export const getBodegaById = async (id: number) => {
+  try {
+    return fetchApiWithAuth<BodegaResponse>(`/bodegas/${id}`);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Error al obtener la bodega";
+    errorLogger(error, "[BODEGAS]: " + errorMessage);
     throw new Error(errorMessage);
   }
 };

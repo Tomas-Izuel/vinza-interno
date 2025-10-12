@@ -27,12 +27,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { AuthzGuard } from "../auth/AuthzGuard";
 import { Permissions } from "@/api/auth/auth.type";
+import { useRouter } from "next/navigation";
 
 export function NewEstadoReserva() {
+  const { refresh } = useRouter();
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,6 +43,7 @@ export function NewEstadoReserva() {
     resolver: zodResolver(CrearEstadoReservaSchema),
     defaultValues: {
       nombre: "",
+      descripcion: "",
     },
   });
 
@@ -51,7 +55,7 @@ export function NewEstadoReserva() {
       form.reset();
       setOpen(false);
       // Refresh the page to show the new estado reserva
-      window.location.reload();
+      refresh();
     } catch (error) {
       toast.error("Error al crear el estado de reserva", {
         description: error instanceof Error ? error.message : undefined,
@@ -94,6 +98,22 @@ export function NewEstadoReserva() {
                     <FormControl>
                       <Input
                         placeholder="Ingresa el nombre del estado"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="descripcion"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Descripción</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Ingresa una descripción (opcional)"
                         {...field}
                       />
                     </FormControl>

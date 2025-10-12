@@ -38,3 +38,5 @@ export type ValidateBodegaResponse = {
   message: string;
   bodega: Bodega;
 };
+
+export type BodegaResponse = Bodega;

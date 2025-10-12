@@ -26,6 +26,7 @@ export function ListaEstadoRecorrido({
         <TableHeader className="bg-gray-100">
           <TableRow>
             <TableHead>Nombre</TableHead>
+            <TableHead>Descripción</TableHead>
             <TableHead>Última modificación</TableHead>
             <TableHead> </TableHead>
           </TableRow>
@@ -34,6 +35,9 @@ export function ListaEstadoRecorrido({
           {estadosRecorrido.map((estado) => (
             <TableRow key={estado.id}>
               <TableCell className="font-medium">{estado.nombre}</TableCell>
+              <TableCell className="text-gray-600">
+                {estado.descripcion || "-"}
+              </TableCell>
               <TableCell>
                 {moment(estado.updated_at).format("MMM D, YYYY")}
               </TableCell>
