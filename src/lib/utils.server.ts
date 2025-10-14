@@ -1,8 +1,8 @@
-import { API_URL, AUTH_COOKIE_NAME } from "./constants";
-import { cookies, headers } from "next/headers";
-import z from "zod";
-import { errorLogger } from "./utils";
 import { AuthCookieSchema } from "@/api/auth/auth.type";
+import { cookies } from "next/headers";
+import z from "zod";
+import { API_URL, AUTH_COOKIE_NAME } from "./constants";
+import { errorLogger } from "./utils";
 
 export const validateAuthCookie = async (): Promise<z.infer<
   typeof AuthCookieSchema
