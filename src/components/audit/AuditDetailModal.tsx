@@ -7,8 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 import moment from "moment";
 
 interface AuditDetailModalProps {
@@ -67,16 +65,6 @@ export function AuditDetailModal({
                 Tipo de Evento
               </label>
               <p className="text-sm">{getEventTypeLabel(audit.tipoEvento)}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Usuario
-              </label>
-              <p className="text-sm">
-                {audit.user
-                  ? `${audit.user.nombre} ${audit.user.apellido}`
-                  : "Sistema"}
-              </p>
             </div>
             <div>
               <label className="text-sm font-medium text-gray-500">
