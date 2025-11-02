@@ -7,8 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 import moment from "moment";
 
 interface AuditDetailModalProps {
@@ -70,16 +68,6 @@ export function AuditDetailModal({
             </div>
             <div>
               <label className="text-sm font-medium text-gray-500">
-                Usuario
-              </label>
-              <p className="text-sm">
-                {audit.user
-                  ? `${audit.user.nombre} ${audit.user.apellido}`
-                  : "Sistema"}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
                 Email del Usuario
               </label>
               <p className="text-sm">{audit.user?.email || "N/A"}</p>
@@ -90,16 +78,6 @@ export function AuditDetailModal({
               </label>
               <p className="text-sm">
                 {moment(audit.createdAt).format("DD/MM/YYYY HH:mm:ss")}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Fecha de Eliminación
-              </label>
-              <p className="text-sm">
-                {audit.deletedAt
-                  ? moment(audit.deletedAt).format("DD/MM/YYYY HH:mm:ss")
-                  : "N/A"}
               </p>
             </div>
           </div>
