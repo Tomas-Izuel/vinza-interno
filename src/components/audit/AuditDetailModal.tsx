@@ -92,16 +92,6 @@ export function AuditDetailModal({
                 {moment(audit.createdAt).format("DD/MM/YYYY HH:mm:ss")}
               </p>
             </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Fecha de Eliminación
-              </label>
-              <p className="text-sm">
-                {audit.deletedAt
-                  ? moment(audit.deletedAt).format("DD/MM/YYYY HH:mm:ss")
-                  : "N/A"}
-              </p>
-            </div>
           </div>
 
           {/* Datos del evento */}
